@@ -1,5 +1,5 @@
 <html>
-  <head>
+<head>
     <title>Express HTML</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
@@ -31,37 +31,25 @@
         <h1>Design and engineering of mechatronic systems</h1>
         <p>Using express web framework with docker</p>
         <div>
-          <table class="table table-dark table-striped">
-            <thead class="thead-dark">
-                <tr>
-                  <th>Name</th>
-                  <th>Last Name</th>
-                  <th>Email</th>
-                  <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                <% for(var i in users) { %>
-                  <tr>
-                      <td><%= users[i].first_name %></td>
-                      <td><%= users[i].last_name %></td>
-                      <td><%= users[i].email %></td>
-                      <td><button onclick="window.location.href='/person/get/<%=users[i].id %>'">Edit</button></td>
-                      <td><button onclick="removeUser('<%=users[i].firstName%>', '<%=users[i].id%>')">Delete</button></td>
-                    </tr>
-                <% } %>
-            </tbody>
-          </table>
-          <button class="btn btn-primary" onclick="window.location.href='/person/addPerson'">Add new person</button>
+         <form method="post" action="/person/save">
+            <div style="display: flex; gap: 24px; flex-direction: column;">
+                <div class="mb-3">
+                    <label for="firstName" class="form-label">Name: </label>
+                    <input id="firstName" name="firstName" class="form-control" type="text" />
+                </div>
+                <div class="mb-3">
+                    <label for="lastName" class="form-label">Last Name: </label>
+                    <input id="lastName" name="lastName" class="form-control" type="text" />
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email: </label>
+                    <input id="email" name="email" class="form-control" type="text"/>
+                </div>
+                <button id="button" type="submit" class="btn btn-primary" style="width: 200px; align-self:end;">Submit</button>
+            </div>
+         </form>
         </div>
       </div>
     </div>
   </body>
 </html>
-
-<script>
-  function removeUser(name, id) {
-    var r = confirm("User " + name + " will be deleted");
-    r ? (window.location.href='/person/remove/'+ id) : alert("User is not deleted");
-  }
-</script>
