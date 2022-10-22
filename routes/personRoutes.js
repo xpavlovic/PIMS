@@ -9,23 +9,37 @@ app.engine('.html', require('ejs').__express);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'html');
 
+// Parser to set `req.body`
+app.use(require('body-parser').json());
+//app.use(urlencoded({extended: false}));
+//app.use(bodyParser.json());
+//var jsonParser = bodyParser.json();
 const personRepo = require('../repo/personRepository');
 
 Router
   .get('/get/:id', (req, res) => {
         const id = parseInt(req.params.id);
         const result = personRepo.getById(id);
-        res.send(result);
+        res.render('editPerson', {
+            user: result,
+            title: "EJS example"
+        });
+        //res.send(result);
+        
   })
   .get('/all', (req, res) => {
         const result = personRepo.getAll();
         res.render('personList', {
             users: result,
-            title: "EJS example",
-            header: "Some users"
+            title: "EJS example"
         });
-        // res.send(result);
   })
+  .get('/addPerson', (req, res) => {
+      //const result = personRepo.getAll();
+      res.render('addPerson', {
+          title: "EJS example"
+      });
+})
   .get('/remove/:id', (req, res) => {
         const id = parseInt(req.params.id);
         personRepo.remove(id);
@@ -33,9 +47,14 @@ Router
         res.send(result);
   })
   .post('/save', (req, res) => {
-        const person = req.body;
+      console.log('this ran');
+      res.status(200).json({ message: 'ok' });
+      //console.log(JSON.stringify(req.body));
+      /*res.send(JSON.stringify(req.body));*/
+        /*const person = req.body;
         const result = personRepo.save(person);
-        res.send(result);
+        res.send(result);*/
+       // res.redirect(307, '/person/all');
   });
 
 module.exports = Router;
