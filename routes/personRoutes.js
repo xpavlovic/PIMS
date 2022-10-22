@@ -34,6 +34,12 @@ Router
             title: "EJS example"
         });
   })
+  .get('/addPerson', (req, res) => {
+      //const result = personRepo.getAll();
+      res.render('addPerson', {
+          title: "EJS example"
+      });
+})
   .get('/remove/:id', (req, res) => {
         const id = parseInt(req.params.id);
         personRepo.remove(id);
