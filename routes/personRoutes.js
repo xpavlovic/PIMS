@@ -15,7 +15,10 @@ Router
   .get('/get/:id', (req, res) => {
         const id = parseInt(req.params.id);
         const result = personRepo.getById(id);
-        res.send(result);
+        res.render('editPerson', {
+            user: result,
+            title: "EJS example"
+        });
   })
   .get('/all', (req, res) => {
         const result = personRepo.getAll();
